@@ -4,7 +4,7 @@ import torch
 from torch.optim import AdamW
 from argparse import ArgumentParser
 from read import read_config
-from accelerate import Accelerator
+from accelerate import Accelerator, DeepSpeedPlugin
 from accelerate.utils import DummyScheduler, DummyOptim, set_seed
 from peft import get_peft_model, LoraConfig, TaskType
 from data import load_data
@@ -220,6 +220,8 @@ if __name__ == "__main__":
 
     config = read_config(args.config)
 
+    deepspeed_plugin = DeepSpeedPlugin(zero_stage=2, gradient_accumulation_steps=2)
+
     if config["wandb"]:
         accelerator = Accelerator(log_with="wandb")
         accelerator.init_trackers(
@@ -229,5 +231,7 @@ if __name__ == "__main__":
         )
     else:
         accelerator = Accelerator()
+
+    accelerator.state.deepspeed_plugin = deepspeed_plugin
 
     train(accelerator, config=config)

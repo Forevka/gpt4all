@@ -68,8 +68,9 @@ def load_data(config, tokenizer):
             files = [dataset_path]
 
         print(f"Reading files {files}")
-
-        dataset = load_dataset("json", data_files=files, split="train")
+        
+        # dataset = load_dataset("text", data_files={"train": ["my_text_1.txt", "my_text_2.txt"], "test": "my_test_file.txt"})
+        dataset = load_dataset("text", data_files=files, split="train")
 
     else:
         dataset = load_dataset(dataset_path, split="train")
@@ -83,6 +84,7 @@ def load_data(config, tokenizer):
     else:
         kwargs = {}
 
+    '''
     # tokenize inputs and return labels and attention mask
     train_dataset = train_dataset.map(
         lambda ele: tokenize_inputs(config, tokenizer, ele),
@@ -96,7 +98,7 @@ def load_data(config, tokenizer):
         remove_columns=["source", "prompt"],
         **kwargs
     )
-
+    '''
     train_dataset = train_dataset.with_format("torch")
     val_dataset = val_dataset.with_format("torch")
 

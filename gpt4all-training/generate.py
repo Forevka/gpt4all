@@ -36,7 +36,7 @@ def setup_model(config):
     
 if __name__ == "__main__":
     parser = ArgumentParser()
-    parser.add_argument("--config", type=str, required=True)
+    parser.add_argument("--config", type=str, default="config.yaml")
     parser.add_argument("--prompt", type=str)
 
     args = parser.parse_args()
