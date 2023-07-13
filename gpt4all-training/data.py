@@ -70,7 +70,7 @@ def load_data(config, tokenizer):
         print(f"Reading files {files}")
         
         # dataset = load_dataset("text", data_files={"train": ["my_text_1.txt", "my_text_2.txt"], "test": "my_test_file.txt"})
-        dataset = load_dataset("text", data_files=files, split="train")
+        dataset = load_dataset("csv", data_files=files, split="train")
 
     else:
         dataset = load_dataset(dataset_path, split="train")
